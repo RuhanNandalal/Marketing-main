@@ -44,6 +44,7 @@ jobs:
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache-dependency-path: fullstack/package-lock.json # or fullstack/yarn.lock
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -54,10 +55,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('fullstack/**/package-lock.json', 'fullstack/**/yarn.lock') }}-${{ hashFiles('fullstack/**.[jt]s', 'fullstack/**.[jt]sx') }}
+            fullstack/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('fullstack/package-lock.json', 'fullstack/yarn.lock') }}-${{ hashFiles('fullstack/**.[jt]s', 'fullstack/**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('fullstack/**/package-lock.json', 'fullstack/**/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('fullstack/package-lock.json', 'fullstack/yarn.lock') }}-
 
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
